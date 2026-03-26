@@ -35,8 +35,44 @@ if (!window._flutter) {
 }
 _flutter.buildConfig = {"engineRevision":"052f31d115eceda8cbff1b3481fcde4330c4ae12","builds":[{"compileTarget":"dart2js","renderer":"canvaskit","mainJsPath":"main.dart.js"},{}]};
 
-_flutter.loader.load({
-  serviceWorkerSettings: {
-    serviceWorkerVersion: "456932536" /* Flutter's service worker is deprecated and will be removed in a future Flutter release. */
+
+// Ensure body has background image
+document.body.style.cssText = `
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://xtsai2000-png.github.io/DT-hourglass/assets/hourglass_bg.png');
+  background-size: 55% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  overflow: hidden;
+`;
+
+// Override flt-glass-pane style when it appears
+const style = document.createElement('style');
+style.textContent = `
+  flt-glass-pane, flutter-view {
+    background: transparent !important;
+    opacity: 1 !important;
   }
+`;
+document.head.appendChild(style);
+
+// Continuously ensure transparency (Flutter may reset styles)
+const observer = new MutationObserver(() => {
+  const pane = document.querySelector('flt-glass-pane') || document.querySelector('flutter-view');
+  if (pane) {
+    pane.style.background = 'transparent';
+    pane.style.opacity = '1';
+  }
+});
+observer.observe(document.body, { childList: true, subtree: true });
+
+_flutter.loader.load({
+  onEntrypointLoaded: async function(engineInitializer) {
+    const appRunner = await engineInitializer.initializeEngine();
+    appRunner.runApp();
+  },
 });
