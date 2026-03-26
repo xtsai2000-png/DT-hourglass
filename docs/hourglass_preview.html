@@ -8,7 +8,6 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; overflow: hidden; }
 
-/* ── Glass hourglass background ── */
 body {
   background-color: #080812;
   background-image: url('https://xtsai2000-png.github.io/DT-hourglass/assets/hourglass_glass_final.png');
@@ -19,7 +18,6 @@ body {
   position: relative;
 }
 
-/* ── Dramatic spotlight from above ── */
 body::before {
   content: '';
   position: fixed; top: -30%; left: 0; right: 0; height: 80%;
@@ -30,7 +28,6 @@ body::before {
   pointer-events: none; z-index: 1;
 }
 
-/* ── Vignette ── */
 body::after {
   content: '';
   position: fixed; inset: 0;
@@ -40,14 +37,12 @@ body::after {
   pointer-events: none; z-index: 1;
 }
 
-/* ── Canvas: sand particles ── */
 #particles {
   position: fixed; inset: 0;
   z-index: 2;
   pointer-events: none;
 }
 
-/* ── UI overlay ── */
 #ui {
   position: fixed; inset: 0;
   z-index: 10;
@@ -57,7 +52,6 @@ body::after {
   color: white;
 }
 
-/* ── Header ── */
 #header {
   display: flex;
   justify-content: space-between;
@@ -93,30 +87,30 @@ body::after {
   transition: all 0.6s ease;
 }
 
-/* ── Centered hourglass area ── */
-#center {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
 #center-hint {
+  position: fixed;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 11px;
   color: rgba(255,255,255,0.3);
   letter-spacing: 0.1em;
   text-align: center;
-  margin-top: 60px;
   pointer-events: none;
+  z-index: 10;
 }
 
-/* ── Bottom data cards ── */
 #bottom {
   display: flex;
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 0 20px;
 }
 
 .card {
@@ -127,17 +121,8 @@ body::after {
   padding: 12px 18px;
   min-width: 80px;
   text-align: center;
-  transition: all 0.3s ease;
-  cursor: default;
 }
-.card:hover {
-  background: rgba(255,255,255,0.12);
-  transform: translateY(-2px);
-}
-.card-icon {
-  font-size: 18px;
-  margin-bottom: 4px;
-}
+.card-icon { font-size: 18px; margin-bottom: 4px; }
 .card-label {
   font-size: 9px;
   letter-spacing: 0.1em;
@@ -169,10 +154,9 @@ body::after {
   50% { opacity: 0.3; }
 }
 
-/* ── Mood selector ── */
 #mood-selector {
   position: fixed;
-  bottom: 90px;
+  bottom: 160px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -204,12 +188,11 @@ body::after {
   background: rgba(255,255,255,0.15);
   transform: scale(1.15);
 }
-
-.mood-btn[data-mood="serene"]   { background: rgba(100,181,246,0.2); }
-.mood-btn[data-mood="anxious"]  { background: rgba(120,144,156,0.2); }
-.mood-btn[data-mood="focused"]  { background: rgba(126,87,194,0.2); }
-.mood-btn[data-mood="energetic"]{ background: rgba(255,183,77,0.2); }
-.mood-btn[data-mood="resting"]  { background: rgba(38,166,154,0.2); }
+.mood-btn[data-mood="serene"]    { background: rgba(100,181,246,0.2); }
+.mood-btn[data-mood="anxious"]   { background: rgba(120,144,156,0.2); }
+.mood-btn[data-mood="focused"]   { background: rgba(126,87,194,0.2); }
+.mood-btn[data-mood="energetic"] { background: rgba(255,183,77,0.2); }
+.mood-btn[data-mood="resting"]   { background: rgba(38,166,154,0.2); }
 </style>
 </head>
 <body>
@@ -218,169 +201,260 @@ body::after {
 
 <div id="ui">
   <div id="header">
-    <div id="brand">
-      沈光
-      <span>DT-hourglass · 情緒沉積視覺化</span>
-    </div>
+    <div id="brand">沈光<span>DT-hourglass · 情緒沉積視覺化</span></div>
     <div id="mood-badge">平靜</div>
-  </div>
-
-  <div id="center">
-    <div id="center-hint">沙漏正在沉積你的情緒</div>
-  </div>
-
-  <div id="mood-selector">
-    <button class="mood-btn active" data-mood="serene" title="平靜">☁</button>
-    <button class="mood-btn" data-mood="anxious" title="焦慮">⚡</button>
-    <button class="mood-btn" data-mood="focused" title="專注">◈</button>
-    <button class="mood-btn" data-mood="energetic" title="活力">◉</button>
-    <button class="mood-btn" data-mood="resting" title="休息">☾</button>
-  </div>
-
-  <div id="bottom">
-    <div class="card">
-      <div class="card-icon">🤖</div>
-      <div class="card-label">AI 晶片</div>
-      <div class="card-value live">運行中</div>
-    </div>
-    <div class="card">
-      <div class="card-icon">💗</div>
-      <div class="card-label">心率</div>
-      <div class="card-value">72 bpm</div>
-    </div>
-    <div class="card">
-      <div class="card-icon">👣</div>
-      <div class="card-label">步數</div>
-      <div class="card-value">12,345</div>
-    </div>
-    <div class="card">
-      <div class="card-icon">☀</div>
-      <div class="card-label">環境光</div>
-      <div class="card-value">舒適</div>
-    </div>
-    <div class="card">
-      <div class="card-icon">😴</div>
-      <div class="card-label">睡眠</div>
-      <div class="card-value">7h 23m</div>
-    </div>
   </div>
 </div>
 
+<div id="center-hint">沙漏正在沉積你的情緒</div>
+
+<div id="mood-selector">
+  <button class="mood-btn active" data-mood="serene" title="平靜">☁</button>
+  <button class="mood-btn" data-mood="anxious" title="焦慮">⚡</button>
+  <button class="mood-btn" data-mood="focused" title="專注">◈</button>
+  <button class="mood-btn" data-mood="energetic" title="活力">◉</button>
+  <button class="mood-btn" data-mood="resting" title="休息">☾</button>
+</div>
+
+<div id="bottom">
+  <div class="card"><div class="card-icon">🤖</div><div class="card-label">AI 晶片</div><div class="card-value live">運行中</div></div>
+  <div class="card"><div class="card-icon">💗</div><div class="card-label">心率</div><div class="card-value">72 bpm</div></div>
+  <div class="card"><div class="card-icon">👣</div><div class="card-label">步數</div><div class="card-value">12,345</div></div>
+  <div class="card"><div class="card-icon">☀</div><div class="card-label">環境光</div><div class="card-value">舒適</div></div>
+  <div class="card"><div class="card-icon">😴</div><div class="card-label">睡眠</div><div class="card-value">7h 23m</div></div>
+</div>
+
 <script>
-// ── Sand Particle System ──
+// ── Redesigned Sand Particle System ──
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H;
+let cx, cy, bulbR, neckW, neckH, totalH;
 
 const MOOD_COLORS = {
-  serene:    { r: 100, g: 181, b: 246, label: '平靜',   texture: 0.2 },
-  anxious:   { r: 120, g: 144, b: 156, label: '焦慮',   texture: 0.8 },
-  focused:   { r: 126, g: 87,  b: 194, label: '專注',   texture: 0.9 },
-  energetic: { r: 255, g: 183, b: 77,  label: '活力',   texture: 0.5 },
-  resting:   { r: 38,  g: 166, b: 154, label: '休息',   texture: 0.3 },
+  serene:    { r:100, g:181, b:246, label:'平靜',   glow:'rgba(100,181,246,0.6)'  },
+  anxious:   { r:120, g:144, b:156, label:'焦慮',   glow:'rgba(120,144,156,0.6)' },
+  focused:   { r:126, g:87,  b:194, label:'專注',   glow:'rgba(126,87,194,0.6)'  },
+  energetic: { r:255, g:183, b:77,  label:'活力',   glow:'rgba(255,183,77,0.6)'  },
+  resting:   { r:38,  g:166, b:154, label:'休息',   glow:'rgba(38,166,154,0.6)'  },
 };
-
 let currentMood = 'serene';
-let particles = [];
-const MAX_PARTICLES = 180;
+let grains = [];
 
 function resize() {
   W = canvas.width  = window.innerWidth;
   H = canvas.height = window.innerHeight;
+  // Center of hourglass
+  cx = W / 2;
+  cy = H / 2;
+  bulbR  = Math.min(W * 0.20, H * 0.28);   // bulb radius
+  neckW  = bulbR * 0.13;                     // neck width
+  neckH  = bulbR * 0.08;                     // neck height
+  totalH = bulbR * 2.2;                      // total height
 }
 window.addEventListener('resize', resize);
 resize();
 
-// Hourglass outline (in relative coords 0-1)
-function getHourglassBounds() {
-  const cx = 0.5, cy = 0.5;
-  const hw = 0.14, hh = 0.38; // half-width, half-height
-  return { cx, cy, hw, hh };
+// Returns {x,y} of hourglass outline at given height y (relative to center)
+function hourglassWidth(yRel) {
+  const absY = Math.abs(yRel);
+  const bulbH = totalH / 2 - neckH;
+  if (absY <= neckH) {
+    // Neck: constant narrow width
+    return neckW;
+  } else {
+    // Bulb: circle-ish, gets wider then narrows toward neck
+    const t = (absY - neckH) / bulbH;
+    // Smooth bell curve: narrow at neck, wide at equator, narrow at pole
+    const bell = Math.sin(t * Math.PI);
+    const maxW = bulbR;
+    return neckW + (maxW - neckW) * bell * bell;
+  }
 }
 
-function isInsideHourglass(x, y) {
-  // Top bulb: ellipse centered at (cx, cy - hh*0.28), radii (hw, hh*0.3)
-  // Bottom bulb: ellipse centered at (cx, cy + hh*0.28), radii (hw, hh*0.3)
-  // Neck: rectangle at center, width = hw*0.22, height = hh*0.1
-  const { cx, cy, hw, hh } = getHourglassBounds();
-  const nx = (x - cx) / hw;
-  const ny = (y - cy) / hh;
+// Check if a point is inside the hourglass
+function inHourglass(x, y) {
+  const yRel = y - cy;
+  const absY = Math.abs(yRel);
+  const bulbH = totalH / 2 - neckH;
+  const hw = hourglassWidth(yRel);
 
-  // Top bulb
-  const nt = ny + 0.28;
-  const nb = ny - 0.28;
-  const tBulb = (nx*nx) / 1 + (nt*nt) / 0.09 < 1 && ny < 0;
-  const bBulb = (nx*nx) / 1 + (nb*nb) / 0.09 < 1 && ny > 0;
-  const neck = Math.abs(nx) < 0.11 && Math.abs(ny) < 0.055;
-
-  return tBulb || bBulb || neck;
+  if (absY <= neckH) {
+    // Neck
+    return Math.abs(x - cx) <= hw;
+  } else if (absY <= bulbH + neckH) {
+    // Bulb region
+    return Math.abs(x - cx) <= hw;
+  }
+  return false;
 }
 
-class Particle {
-  constructor() { this.reset(); }
-  reset() {
-    const { cx, cy, hw, hh } = getHourglassBounds();
-    // Start at top bulb center area
-    this.x = cx + (Math.random() - 0.5) * hw * 0.7;
-    this.y = cy - hh * 0.2;
-    this.vx = (Math.random() - 0.5) * 0.0008;
-    this.vy = 0.002 + Math.random() * 0.003;
-    this.size = 2 + Math.random() * 3;
-    const c = MOOD_COLORS[currentMood];
-    this.color = `rgba(${c.r},${c.g},${c.b},${0.4 + Math.random() * 0.5})`;
+class SandGrain {
+  constructor(staggerY) {
+    this._reset(staggerY);
+  }
+  _reset(staggerY) {
+    // Start at top of hourglass with random horizontal spread
+    const topY = cy - totalH / 2 + Math.random() * totalH * 0.6;
+    const spread = hourglassWidth(topY - cy) * 0.8;
+    this.x = cx + (Math.random() - 0.5) * spread;
+    this.y = staggerY !== undefined ? topY : cy - totalH / 2 + Math.random() * totalH * 0.05;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = 0.3 + Math.random() * 0.4;   // pixels per frame
+    this.size = 1.0 + Math.random() * 1.8;  // 1-3px sand grain
     this.alpha = 0;
     this.life = 0;
+    this.trail = [];  // short trail for motion blur effect
   }
   update() {
+    // Gravity + slight horizontal drift
     this.x += this.vx;
     this.y += this.vy;
+    this.vy += 0.008; // gravity accelerates fall
+    this.vx *= 0.99;  // air resistance
     this.life++;
-    this.alpha = Math.min(1, this.life / 20);
-    // Gravity pulls toward center as it falls
-    const { cx } = getHourglassBounds();
-    this.vx += (cx - this.x) * 0.00005;
-    // Remove if out of hourglass bottom
-    if (this.y > 0.65 || !isInsideHourglass(this.x, this.y)) {
-      this.reset();
+    this.alpha = Math.min(0.9, this.life / 15);
+
+    // Constrain to hourglass shape
+    const hw = hourglassWidth(this.y - cy);
+    const leftEdge = cx - hw;
+    const rightEdge = cx + hw;
+
+    if (this.x < leftEdge) { this.x = leftEdge; this.vx *= -0.4; }
+    if (this.x > rightEdge) { this.x = rightEdge; this.vx *= -0.4; }
+
+    // Slow down in neck
+    if (Math.abs(this.y - cy) < neckH * 2) {
+      this.vy *= 0.95;
+    }
+
+    // Trail
+    this.trail.push({ x: this.x, y: this.y, alpha: this.alpha * 0.4 });
+    if (this.trail.length > 5) this.trail.shift();
+
+    // Reset when fallen to bottom
+    if (this.y > cy + totalH / 2 - 5 || this.life > 800) {
+      this._reset();
     }
   }
   draw() {
-    const sx = this.x * W, sy = this.y * H;
-    ctx.save();
-    ctx.globalAlpha = this.alpha * 0.85;
-    // Glow
-    const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, this.size * 2.5);
-    grad.addColorStop(0, this.color);
+    const mc = MOOD_COLORS[currentMood];
+    // Draw trail (motion blur)
+    for (let i = 0; i < this.trail.length; i++) {
+      const t = this.trail[i];
+      const frac = i / this.trail.length;
+      ctx.globalAlpha = t.alpha * frac * 0.5;
+      ctx.fillStyle = `rgb(${mc.r},${mc.g},${mc.b})`;
+      ctx.beginPath();
+      ctx.arc(t.x, t.y, this.size * frac, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // Main grain with glow
+    ctx.globalAlpha = this.alpha;
+    const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2.5);
+    grad.addColorStop(0, mc.glow);
     grad.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = grad;
     ctx.beginPath();
-    ctx.arc(sx, sy, this.size * 2.5, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
     ctx.fill();
-    // Core dot
-    ctx.globalAlpha = this.alpha;
-    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.alpha * 0.9;
+    ctx.fillStyle = `rgb(${mc.r},${mc.g},${mc.b})`;
     ctx.beginPath();
-    ctx.arc(sx, sy, this.size, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
-    ctx.restore();
+    ctx.globalAlpha = 1;
   }
 }
 
-// Init particles
-for (let i = 0; i < MAX_PARTICLES; i++) {
-  const p = new Particle();
-  p.y = 0.0 + Math.random() * 0.95; // stagger initial positions
-  p.life = Math.floor(Math.random() * 100);
-  p.alpha = Math.min(1, p.life / 20);
-  particles.push(p);
+// Create many grains staggered across the hourglass
+const NUM_GRAINS = 120;
+for (let i = 0; i < NUM_GRAINS; i++) {
+  grains.push(new SandGrain());
+  // Stagger initial positions so they're not all at top
+  grains[i].y = cy - totalH / 2 + Math.random() * totalH;
+  grains[i].life = Math.floor(Math.random() * 300);
+  grains[i].alpha = Math.min(0.9, grains[i].life / 15);
+}
+
+function drawHourglassOutline() {
+  const mc = MOOD_COLORS[currentMood];
+  ctx.save();
+  ctx.strokeStyle = `rgba(${mc.r},${mc.g},${mc.b},0.12)`;
+  ctx.lineWidth = 1.5;
+
+  // Draw hourglass outline path
+  ctx.beginPath();
+  const steps = 80;
+  // Top half: left side going down
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const yRel = -(totalH / 2) + t * (totalH / 2);
+    const hw = hourglassWidth(yRel);
+    const px = cx - hw, py = cy + yRel;
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  }
+  // Neck right side going up
+  for (let i = steps; i >= 0; i--) {
+    const t = i / steps;
+    const yRel = -(totalH / 2) + t * (totalH / 2);
+    const hw = hourglassWidth(yRel);
+    ctx.lineTo(cx + hw, cy + yRel);
+  }
+  ctx.closePath();
+  ctx.stroke();
+
+  // Second half: bottom bulb
+  ctx.beginPath();
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const yRel = (totalH / 2) - t * (totalH / 2);
+    const hw = hourglassWidth(yRel);
+    const px = cx + hw, py = cy + yRel;
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  }
+  for (let i = steps; i >= 0; i--) {
+    const t = i / steps;
+    const yRel = (totalH / 2) - t * (totalH / 2);
+    const hw = hourglassWidth(yRel);
+    ctx.lineTo(cx - hw, cy + yRel);
+  }
+  ctx.closePath();
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+function drawBottomMound() {
+  const mc = MOOD_COLORS[currentMood];
+  const baseY = cy + totalH / 2 - 2;
+  ctx.save();
+  const grad = ctx.createRadialGradient(cx, baseY, 0, cx, baseY, bulbR * 0.9);
+  grad.addColorStop(0, `rgba(${mc.r},${mc.g},${mc.b},0.35)`);
+  grad.addColorStop(0.5, `rgba(${mc.r},${mc.g},${mc.b},0.15)`);
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.ellipse(cx, baseY, bulbR * 0.85, bulbR * 0.18, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
 }
 
 function animate() {
   ctx.clearRect(0, 0, W, H);
-  for (const p of particles) {
-    p.update();
-    p.draw();
+
+  // Bottom accumulated sand glow
+  drawBottomMound();
+
+  // Hourglass outline
+  drawHourglassOutline();
+
+  // Sand grains
+  for (const g of grains) {
+    g.update();
+    g.draw();
   }
+
   requestAnimationFrame(animate);
 }
 animate();
@@ -393,8 +467,6 @@ document.querySelectorAll('.mood-btn').forEach(btn => {
     btn.classList.add('active');
     currentMood = btn.dataset.mood;
     badge.textContent = MOOD_COLORS[currentMood].label;
-    badge.style.borderColor = `rgba(${MOOD_COLORS[currentMood].r},${MOOD_COLORS[currentMood].g},${MOOD_COLORS[currentMood].b},0.4)`;
-    badge.style.color = `rgba(255,255,255,0.9)`;
   });
 });
 </script>
