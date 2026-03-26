@@ -8,356 +8,395 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; overflow: hidden; }
 
+/* ── Glass hourglass background ── */
 body {
   background-color: #080812;
   background-image: url('https://xtsai2000-png.github.io/DT-hourglass/assets/hourglass_glass_final.png');
   background-size: 70% auto;
   background-position: center;
   background-repeat: no-repeat;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
   position: relative;
 }
 
-/* Dramatic spotlight from above */
+/* ── Dramatic spotlight from above ── */
 body::before {
   content: '';
   position: fixed; top: -30%; left: 0; right: 0; height: 80%;
   background: radial-gradient(ellipse 80% 100% at 50% 0%,
-    rgba(255,220,100,0.08) 0%,
-    rgba(255,180,60,0.04) 30%,
+    rgba(255,220,100,0.10) 0%,
+    rgba(255,160,40,0.04) 40%,
     transparent 70%);
   pointer-events: none; z-index: 1;
 }
 
-/* Bottom ambient glow */
+/* ── Vignette ── */
 body::after {
   content: '';
-  position: fixed; bottom: 0; left: 0; right: 0; height: 50%;
-  background: radial-gradient(ellipse 60% 80% at 50% 100%,
-    rgba(255,200,80,0.05) 0%,
-    transparent 70%);
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse 100% 100% at 50% 50%,
+    transparent 40%,
+    rgba(4,4,10,0.7) 100%);
   pointer-events: none; z-index: 1;
 }
 
-/* ── CSS Glass Bulb (top) ── */
-.bulb-top {
-  position: fixed;
-  top: calc(50% - 200px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 260px; height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 40% 35%,
-    rgba(255,255,255,0.12) 0%,
-    rgba(255,220,100,0.06) 30%,
-    rgba(255,200,80,0.03) 60%,
-    rgba(0,0,0,0.15) 100%);
-  border: 1px solid rgba(255,220,100,0.30);
-  box-shadow:
-    inset 0 -30px 60px rgba(255,200,80,0.08),
-    inset 0 10px 40px rgba(255,255,255,0.05),
-    0 0 20px rgba(255,200,80,0.05);
+/* ── Canvas: sand particles ── */
+#particles {
+  position: fixed; inset: 0;
   z-index: 2;
-}
-
-/* ── CSS Glass Bulb (bottom) ── */
-.bulb-bot {
-  position: fixed;
-  top: calc(50% + 20px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 270px; height: 230px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 40%,
-    rgba(255,200,80,0.10) 0%,
-    rgba(255,160,40,0.06) 40%,
-    rgba(0,0,0,0.20) 100%);
-  border: 1px solid rgba(255,220,100,0.25);
-  box-shadow:
-    inset 0 20px 50px rgba(255,180,60,0.06),
-    inset 0 -10px 30px rgba(0,0,0,0.20),
-    0 0 20px rgba(255,200,80,0.04);
-  z-index: 2;
-}
-
-/* ── Neck ── */
-.neck {
-  position: fixed;
-  top: calc(50% - 20px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 22px; height: 60px;
-  background: linear-gradient(to bottom,
-    rgba(255,210,80,0.12) 0%,
-    rgba(255,180,60,0.08) 50%,
-    rgba(255,200,80,0.10) 100%);
-  border-left: 1px solid rgba(255,220,100,0.25);
-  border-right: 1px solid rgba(255,220,100,0.25);
-  z-index: 2;
-}
-
-/* ── Stream glow ── */
-.stream {
-  position: fixed;
-  top: calc(50% - 175px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 3px; height: 60px;
-  background: linear-gradient(to bottom,
-    rgba(255,220,80,0.95) 0%,
-    rgba(255,200,60,0.7) 60%,
-    rgba(255,180,40,0.3) 100%);
-  border-radius: 2px;
-  box-shadow:
-    0 0 6px rgba(255,215,0,0.8),
-    0 0 12px rgba(255,215,0,0.4),
-    0 0 24px rgba(255,200,80,0.2);
-  z-index: 3;
-  animation: stream-pulse 0.7s ease-in-out infinite;
-}
-
-@keyframes stream-pulse {
-  0%, 100% { opacity: 0.85; width: 3px; }
-  50%       { opacity: 1;   width: 4px; }
-}
-
-/* ── Falling particle dots ── */
-@keyframes fall-d1 {
-  0%   { transform: translateY(0px) translateX(0px); opacity: 0; }
-  8%   { opacity: 1; }
-  88%  { opacity: 0.8; }
-  100% { transform: translateY(60px) translateX(8px); opacity: 0; }
-}
-@keyframes fall-d2 {
-  0%   { transform: translateY(0px) translateX(0px); opacity: 0; }
-  8%   { opacity: 0.9; }
-  88%  { opacity: 0.6; }
-  100% { transform: translateY(60px) translateX(-6px); opacity: 0; }
-}
-@keyframes fall-d3 {
-  0%   { transform: translateY(0px) translateX(0px); opacity: 0; }
-  8%   { opacity: 1; }
-  88%  { opacity: 0.7; }
-  100% { transform: translateY(60px) translateX(4px); opacity: 0; }
-}
-
-.pdot {
-  position: fixed;
-  top: calc(50% - 175px);
-  border-radius: 50%;
-  box-shadow: 0 0 4px currentColor, 0 0 8px currentColor;
-  z-index: 3;
-}
-.p1 { left: calc(50% + 2px);  width: 2.5px; height: 2.5px; background: #fde047; animation: fall-d1 1.8s ease-in infinite 0s;    }
-.p2 { left: calc(50% - 4px);  width: 2px;   height: 2px;   background: #fbbf24; animation: fall-d2 2.1s ease-in infinite 0.3s;  }
-.p3 { left: calc(50% + 5px);  width: 2px;   height: 2px;   background: #fde047; animation: fall-d3 1.6s ease-in infinite 0.6s;  }
-.p4 { left: calc(50% - 2px);  width: 3px;   height: 3px;   background: #22d3ee; animation: fall-d1 2.0s ease-in infinite 0.9s;  }
-.p5 { left: calc(50% + 3px);  width: 2px;   height: 2px;   background: #fde047; animation: fall-d2 1.9s ease-in infinite 1.2s;  }
-.p6 { left: calc(50% - 5px);  width: 2px;   height: 2px;   background: #fbbf24; animation: fall-d3 2.2s ease-in infinite 0.15s; }
-.p7 { left: calc(50% + 1px);  width: 2.5px; height: 2.5px; background: #fde047; animation: fall-d1 1.7s ease-in infinite 0.45s; }
-.p8 { left: calc(50% - 3px);  width: 2px;   height: 2px;   background: #22d3ee; animation: fall-d2 2.3s ease-in infinite 0.75s; }
-
-/* ── Mound (bottom sand pile) ── */
-.mound {
-  position: fixed;
-  bottom: calc(50% - 230px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 130px; height: 35px;
-  background: radial-gradient(ellipse at 50% 100%,
-    rgba(255,215,0,0.80) 0%,
-    rgba(245,158,11,0.50) 40%,
-    rgba(180,83,9,0.20) 70%,
-    transparent 100%);
-  border-radius: 50%;
-  box-shadow:
-    0 0 20px rgba(255,200,0,0.3),
-    0 0 40px rgba(255,180,0,0.15);
-  z-index: 2;
-  animation: mound-pulse 2s ease-in-out infinite;
-}
-
-@keyframes mound-pulse {
-  0%, 100% { opacity: 0.75; transform: translateX(-50%) scaleX(1); }
-  50%       { opacity: 0.95; transform: translateX(-50%) scaleX(1.06); }
-}
-
-/* ── Ambient rings ── */
-.ring {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 1px solid rgba(255,200,80,0.05);
   pointer-events: none;
-  z-index: 1;
-}
-.r1 { width: 380px; height: 560px; animation: ring-breathe 4s ease-in-out infinite 0s; }
-.r2 { width: 440px; height: 620px; animation: ring-breathe 4s ease-in-out infinite 1s; }
-.r3 { width: 500px; height: 680px; animation: ring-breathe 4s ease-in-out infinite 2s; }
-
-@keyframes ring-breathe {
-  0%, 100% { opacity: 0.4; transform: translate(-50%,-50%) scale(1); }
-  50%       { opacity: 0.15; transform: translate(-50%,-50%) scale(1.03); }
 }
 
-/* ── UI Cards ── */
-.data-cards { position: fixed; top: 60px; left: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 10; }
+/* ── UI overlay ── */
+#ui {
+  position: fixed; inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  color: white;
+}
+
+/* ── Header ── */
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 8px;
+}
+
+#brand {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+}
+#brand span {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5);
+  margin-top: 2px;
+}
+
+#mood-badge {
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.05em;
+  transition: all 0.6s ease;
+}
+
+/* ── Centered hourglass area ── */
+#center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+#center-hint {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-top: 60px;
+  pointer-events: none;
+}
+
+/* ── Bottom data cards ── */
+#bottom {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .card {
-  background: rgba(10,10,22,0.82);
-  border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 16px; padding: 11px 16px;
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  display: flex; align-items: center; gap: 12px;
-  animation: card-float 4s ease-in-out infinite;
-}
-.card:nth-child(2) { animation-delay: 0.5s; }
-.card:nth-child(3) { animation-delay: 1.0s; }
-.card:nth-child(4) { animation-delay: 1.5s; }
-
-@keyframes card-float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-5px); }
-}
-.card-label { font-size: 10px; color: rgba(255,255,255,0.42); text-transform: uppercase; letter-spacing: 0.06em; }
-.card-value { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: 0.02em; }
-
-/* Sleep */
-.sleep-card {
-  position: fixed; top: 60px; right: 20px;
-  background: rgba(10,10,22,0.82); border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 16px; padding: 12px 16px;
-  backdrop-filter: blur(16px); z-index: 10;
-  animation: card-float 5s ease-in-out infinite 2s;
-}
-.sleep-title { font-size: 10px; color: rgba(255,255,255,0.42); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-.sleep-bars { display: flex; align-items: flex-end; gap: 3px; height: 34px; }
-.sleep-bar { width: 9px; border-radius: 3px; background: linear-gradient(to top, #6366f1, #8b5cf6); }
-
-/* Emotion */
-.emotion-area { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 10; }
-.emotion-label { font-size: 13px; color: rgba(255,255,255,0.58); margin-bottom: 10px; }
-.emotion-label strong { color: #f97316; font-weight: 700; }
-.emotion-buttons {
-  display: flex; gap: 6px;
-  background: rgba(10,10,22,0.82); border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 50px; padding: 5px 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
   backdrop-filter: blur(16px);
+  border-radius: 16px;
+  padding: 12px 18px;
+  min-width: 80px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: default;
 }
-.emotion-btn {
-  padding: 5px 13px; border-radius: 50px; border: none;
-  font-size: 11px; cursor: pointer; transition: all 0.2s;
-  color: rgba(255,255,255,0.48); background: transparent;
+.card:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
 }
-.emotion-btn.active { color: #fff; font-weight: 700; }
-.emotion-btn.calm.active { background: #3b82f6; }
-.emotion-btn.focused.active { background: #8b5cf6; }
-.emotion-btn.anxious.active { background: #92400e; }
-.emotion-btn.vitality.active { background: #f97316; }
-.emotion-btn.rest.active { background: #0d9488; }
+.card-icon {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.card-label {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.card-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.02em;
+}
+.card-value.live {
+  color: #4FC3F7;
+}
+.card-value.live::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: #4FC3F7;
+  border-radius: 50%;
+  margin-right: 5px;
+  animation: pulse 2s infinite;
+  vertical-align: middle;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
 
-/* Nav */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  height: 60px; background: rgba(8,8,18,0.95);
-  border-top: 1px solid rgba(255,255,255,0.06);
+/* ── Mood selector ── */
+#mood-selector {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  padding: 8px 14px;
+}
+
+.mood-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  background: transparent;
+  transition: all 0.3s ease;
   display: flex; align-items: center; justify-content: center;
-  gap: 40px; z-index: 10;
-  padding-bottom: env(safe-area-inset-bottom);
 }
-.nav-btn {
-  width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
+.mood-btn:hover { color: white; background: rgba(255,255,255,0.1); }
+.mood-btn.active {
+  border-color: rgba(255,255,255,0.6);
+  color: white;
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.15);
 }
-.nav-btn.back { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.38); }
-.nav-btn.ai {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: #fff; font-size: 16px; width: 50px; height: 50px;
-  box-shadow: 0 0 24px rgba(99,102,241,0.55);
-}
-.nav-btn.settings { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.38); }
-@keyframes dot-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50%       { opacity: 1;   transform: scale(1.25); }
-}
-.ai-dot { display: inline-block; width: 6px; height: 6px; background: #a5b4fc; border-radius: 50%; animation: dot-pulse 1.5s ease-in-out infinite; }
+
+.mood-btn[data-mood="serene"]   { background: rgba(100,181,246,0.2); }
+.mood-btn[data-mood="anxious"]  { background: rgba(120,144,156,0.2); }
+.mood-btn[data-mood="focused"]  { background: rgba(126,87,194,0.2); }
+.mood-btn[data-mood="energetic"]{ background: rgba(255,183,77,0.2); }
+.mood-btn[data-mood="resting"]  { background: rgba(38,166,154,0.2); }
 </style>
 </head>
 <body>
 
-<!-- Ambient rings -->
-<div class="ring r1"></div>
-<div class="ring r2"></div>
-<div class="ring r3"></div>
+<canvas id="particles"></canvas>
 
-<!-- CSS Glass Hourglass -->
-<div class="bulb-top"></div>
-<div class="bulb-bot"></div>
-<div class="neck"></div>
-<div class="mound"></div>
-<div class="stream"></div>
-<div class="pdot p1"></div>
-<div class="pdot p2"></div>
-<div class="pdot p3"></div>
-<div class="pdot p4"></div>
-<div class="pdot p5"></div>
-<div class="pdot p6"></div>
-<div class="pdot p7"></div>
-<div class="pdot p8"></div>
+<div id="ui">
+  <div id="header">
+    <div id="brand">
+      沈光
+      <span>DT-hourglass · 情緒沉積視覺化</span>
+    </div>
+    <div id="mood-badge">平靜</div>
+  </div>
 
-<!-- Data Cards -->
-<div class="data-cards">
-  <div class="card">
-    <span style="font-size:18px">🤖</span>
-    <div><div class="card-label">AI Chip</div><div class="card-value">Running</div></div>
+  <div id="center">
+    <div id="center-hint">沙漏正在沉積你的情緒</div>
   </div>
-  <div class="card">
-    <span style="font-size:18px">💗</span>
-    <div><div class="card-label">Heart Rate</div><div class="card-value">72 bpm</div></div>
-  </div>
-  <div class="card">
-    <span style="font-size:18px">👟</span>
-    <div><div class="card-label">Steps</div><div class="card-value">12,345</div></div>
-  </div>
-  <div class="card">
-    <span style="font-size:18px">☀️</span>
-    <div><div class="card-label">Light</div><div class="card-value">350 lux</div></div>
-  </div>
-</div>
 
-<!-- Sleep -->
-<div class="sleep-card">
-  <div class="sleep-title">💤 Sleep Monitor</div>
-  <div class="sleep-bars">
-    <div class="sleep-bar" style="height:13px"></div>
-    <div class="sleep-bar" style="height:19px"></div>
-    <div class="sleep-bar" style="height:27px"></div>
-    <div class="sleep-bar" style="height:34px"></div>
-    <div class="sleep-bar" style="height:21px"></div>
-    <div class="sleep-bar" style="height:17px"></div>
-    <div class="sleep-bar" style="height:9px"></div>
+  <div id="mood-selector">
+    <button class="mood-btn active" data-mood="serene" title="平靜">☁</button>
+    <button class="mood-btn" data-mood="anxious" title="焦慮">⚡</button>
+    <button class="mood-btn" data-mood="focused" title="專注">◈</button>
+    <button class="mood-btn" data-mood="energetic" title="活力">◉</button>
+    <button class="mood-btn" data-mood="resting" title="休息">☾</button>
+  </div>
+
+  <div id="bottom">
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-label">AI 晶片</div>
+      <div class="card-value live">運行中</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💗</div>
+      <div class="card-label">心率</div>
+      <div class="card-value">72 bpm</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">👣</div>
+      <div class="card-label">步數</div>
+      <div class="card-value">12,345</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">☀</div>
+      <div class="card-label">環境光</div>
+      <div class="card-value">舒適</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">😴</div>
+      <div class="card-label">睡眠</div>
+      <div class="card-value">7h 23m</div>
+    </div>
   </div>
 </div>
 
-<!-- Emotion -->
-<div class="emotion-area">
-  <div class="emotion-label">Current Emotion: <strong>Vitality</strong></div>
-  <div class="emotion-buttons">
-    <button class="emotion-btn calm">Calm</button>
-    <button class="emotion-btn focused">Focus</button>
-    <button class="emotion-btn anxious">Anxious</button>
-    <button class="emotion-btn vitality active">Vitality</button>
-    <button class="emotion-btn rest">Rest</button>
-  </div>
-</div>
+<script>
+// ── Sand Particle System ──
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H;
 
-<!-- Nav -->
-<div class="bottom-nav">
-  <button class="nav-btn back">←</button>
-  <button class="nav-btn ai">✨ AI <span class="ai-dot"></span></button>
-  <button class="nav-btn settings">⚙</button>
-</div>
+const MOOD_COLORS = {
+  serene:    { r: 100, g: 181, b: 246, label: '平靜',   texture: 0.2 },
+  anxious:   { r: 120, g: 144, b: 156, label: '焦慮',   texture: 0.8 },
+  focused:   { r: 126, g: 87,  b: 194, label: '專注',   texture: 0.9 },
+  energetic: { r: 255, g: 183, b: 77,  label: '活力',   texture: 0.5 },
+  resting:   { r: 38,  g: 166, b: 154, label: '休息',   texture: 0.3 },
+};
 
+let currentMood = 'serene';
+let particles = [];
+const MAX_PARTICLES = 180;
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// Hourglass outline (in relative coords 0-1)
+function getHourglassBounds() {
+  const cx = 0.5, cy = 0.5;
+  const hw = 0.14, hh = 0.38; // half-width, half-height
+  return { cx, cy, hw, hh };
+}
+
+function isInsideHourglass(x, y) {
+  // Top bulb: ellipse centered at (cx, cy - hh*0.28), radii (hw, hh*0.3)
+  // Bottom bulb: ellipse centered at (cx, cy + hh*0.28), radii (hw, hh*0.3)
+  // Neck: rectangle at center, width = hw*0.22, height = hh*0.1
+  const { cx, cy, hw, hh } = getHourglassBounds();
+  const nx = (x - cx) / hw;
+  const ny = (y - cy) / hh;
+
+  // Top bulb
+  const nt = ny + 0.28;
+  const nb = ny - 0.28;
+  const tBulb = (nx*nx) / 1 + (nt*nt) / 0.09 < 1 && ny < 0;
+  const bBulb = (nx*nx) / 1 + (nb*nb) / 0.09 < 1 && ny > 0;
+  const neck = Math.abs(nx) < 0.11 && Math.abs(ny) < 0.055;
+
+  return tBulb || bBulb || neck;
+}
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    const { cx, cy, hw, hh } = getHourglassBounds();
+    // Start at top bulb center area
+    this.x = cx + (Math.random() - 0.5) * hw * 0.7;
+    this.y = cy - hh * 0.2;
+    this.vx = (Math.random() - 0.5) * 0.0008;
+    this.vy = 0.002 + Math.random() * 0.003;
+    this.size = 2 + Math.random() * 3;
+    const c = MOOD_COLORS[currentMood];
+    this.color = `rgba(${c.r},${c.g},${c.b},${0.4 + Math.random() * 0.5})`;
+    this.alpha = 0;
+    this.life = 0;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+    this.alpha = Math.min(1, this.life / 20);
+    // Gravity pulls toward center as it falls
+    const { cx } = getHourglassBounds();
+    this.vx += (cx - this.x) * 0.00005;
+    // Remove if out of hourglass bottom
+    if (this.y > 0.65 || !isInsideHourglass(this.x, this.y)) {
+      this.reset();
+    }
+  }
+  draw() {
+    const sx = this.x * W, sy = this.y * H;
+    ctx.save();
+    ctx.globalAlpha = this.alpha * 0.85;
+    // Glow
+    const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, this.size * 2.5);
+    grad.addColorStop(0, this.color);
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(sx, sy, this.size * 2.5, 0, Math.PI * 2);
+    ctx.fill();
+    // Core dot
+    ctx.globalAlpha = this.alpha;
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(sx, sy, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// Init particles
+for (let i = 0; i < MAX_PARTICLES; i++) {
+  const p = new Particle();
+  p.y = 0.0 + Math.random() * 0.95; // stagger initial positions
+  p.life = Math.floor(Math.random() * 100);
+  p.alpha = Math.min(1, p.life / 20);
+  particles.push(p);
+}
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  for (const p of particles) {
+    p.update();
+    p.draw();
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ── Mood switching ──
+const badge = document.getElementById('mood-badge');
+document.querySelectorAll('.mood-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMood = btn.dataset.mood;
+    badge.textContent = MOOD_COLORS[currentMood].label;
+    badge.style.borderColor = `rgba(${MOOD_COLORS[currentMood].r},${MOOD_COLORS[currentMood].g},${MOOD_COLORS[currentMood].b},0.4)`;
+    badge.style.color = `rgba(255,255,255,0.9)`;
+  });
+});
+</script>
 </body>
 </html>
